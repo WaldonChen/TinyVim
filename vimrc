@@ -23,6 +23,10 @@
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:tinyvim_user = "Waldon Chen"
+let g:tinyvim_email = "waldonchen at gmail.com"
+let g:tinyvim_github = "https://waldonchen.github.io"
+let g:tinyvim_autocomplete = "YCM"  " or NEO
 let g:tinyvim_fancy_font = 1
 let g:tinyvim_expand_tab = 1
 let g:tinyvim_default_indent = 4
@@ -122,19 +126,26 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " -> 自动补全
 "--------------------------------------
-if has('lua')
-    let g:ivim_completion_engine='neocomplete'
-    Plug 'Shougo/neocomplete.vim' " Auto completion framework
+if g:tinyvim_autocomplete == 'NEO'
+    if has('lua')
+        let g:tinyvim_completion_engine='neocomplete'
+        Plug 'Shougo/neocomplete.vim' " Auto completion framework
+    else
+        let g:tinyvim_completion_engine='neocomplcache'
+        Plug 'Shougo/neocomplcache.vim' " Auto completion framework
+    endif
+    Plug 'Shougo/neosnippet.vim' " Snippet engine
+    Plug 'Shougo/neosnippet-snippets' " Snippets
 else
-    let g:ivim_completion_engine='neocomplcache'
-    Plug 'Shougo/neocomplcache.vim' " Auto completion framework
+    let g:tinyvim_completion_engine='YouCompleteMe'
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } "Auto completion framework
+    Plug 'honza/vim-snippets' " Snippets
+    Plug 'sirver/ultisnips' " Snippet engine
 endif
-Plug 'Shougo/neosnippet.vim' " Snippet engine
-Plug 'Shougo/neosnippet-snippets' " Snippets
 
 " -> 代码检测、对齐、格式化
 "--------------------------------------
-Plug 'w0rp/ale'
+Plug 'w0rp/ale' " Asynchronous Lint Engine
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] } " Easy align
 Plug 'Raimondi/delimitMate' " Closing of quotes
 Plug 'tomtom/tcomment_vim' " Commenter
@@ -167,10 +178,13 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 " -> 版本控制
-Plug 'mhinz/vim-signify'    " Show differences with style
-Plug 'tpope/vim-git'        " Synatax highlighting for git
-Plug 'tpope/vim-fugitive'   " A git wrapper
-Plug 'gregsexton/gitv'      " Gitk for vim
+Plug 'mhinz/vim-signify' " Git diff sign
+Plug 'tpope/vim-git' " Synatax highlighting for git
+Plug 'tpope/vim-fugitive' " Git wrapper
+Plug 'gregsexton/gitv' " Gitk for vim
+
+" -> 其它
+Plug 'yianwillis/vimcdoc' " Chinese vim doc
 
 call plug#end()
 
@@ -396,7 +410,7 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 " let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-" let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows 
+" let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
 
 " -> vim-easy-align
 xmap ga <Plug>(EasyAlign)
@@ -414,7 +428,7 @@ function! IsWhiteLine()
         exe 'TCommentBlock'
         normal! j
     else
-        normal! A   
+        normal! A
         exe 'TCommentRight'
         normal! l
         normal! x
@@ -426,7 +440,7 @@ nnoremap <silent> <LocalLeader><Space> :call IsWhiteLine()<CR>
 " -> Multiple cursors
 " Called once right before you start selecting multiple cursors
 function! Multiple_cursors_before()
-    if g:ivim_completion_engine=='neocomplete'
+    if g:tinyvim_completion_engine=='neocomplete'
         exe 'NeoCompleteLock'
     else
         exe 'NeoComplCacheLock'
@@ -434,7 +448,7 @@ function! Multiple_cursors_before()
 endfunction
 " Called once only when the multiple selection is canceled (default <Esc>)
 function! Multiple_cursors_after()
-    if g:ivim_completion_engine=='neocomplete'
+    if g:tinyvim_completion_engine=='neocomplete'
         exe 'NeoCompleteUnlock'
     else
         exe 'NeoComplCacheUnlock'
@@ -452,45 +466,73 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
 " -> Neocomplete & Neocomplcache
-" Use Tab and S-Tab to select candidate
-inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
-" Use Tab and S-Tab to select candidate
-inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
-let g:neocomplete#enable_at_startup=1
-let g:neocomplete#data_directory=$HOME . '/.vim/cache/neocomplete'
-let g:neocomplete#enable_auto_delimiter=1
-" Use <C-E> to close popup
-inoremap <expr><C-E> neocomplete#cancel_popup()
-inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
-            \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
-            \ pumvisible() ? neocomplete#close_popup() : "\<CR>"
-if has('lua')
-    if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns={}
+if g:tinyvim_autocomplete=='NEO'
+    " -> Neocomplete & Neocomplcache
+    " Use Tab and S-Tab to select candidate
+    inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
+    inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
+    if g:tinyvim_completion_engine=='neocomplete'
+        let g:neocomplete#enable_at_startup=1
+        let g:neocomplete#data_directory=$HOME . '/.vim/cache/neocomplete'
+        let g:neocomplete#enable_auto_delimiter=1
+        " Use <C-E> to close popup
+        inoremap <expr><C-E> neocomplete#cancel_popup()
+        inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
+                    \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
+                    \ pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    else
+        let g:neocomplcache_enable_at_startup=1
+        let g:neocomplcache_temporary_dir=$HOME . '/.vim/cache/neocomplcache'
+        let g:neocomplcache_enable_auto_delimiter=1
+        let g:neocomplcache_enable_fuzzy_completion=1
+        " Use <C-E> to close popup
+        inoremap <expr><C-E> neocomplcache#cancel_popup()
+        inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
+                    \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
+                    \ pumvisible() ? neocomplcache#close_popup() : "\<CR>"
     endif
-    let g:neocomplete#force_omni_input_patterns.python=
-    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+    " Setting for specific language
+    if has('lua')
+        if !exists('g:neocomplete#force_omni_input_patterns')
+            let g:neocomplete#force_omni_input_patterns={}
+        endif
+        let g:neocomplete#force_omni_input_patterns.python=
+                    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+    else
+        if !exists('g:neocomplcache_force_omni_patterns')
+            let g:neocomplcache_force_omni_patterns={}
+        endif
+        let g:neocomplcache_force_omni_patterns.python=
+                    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+    endif
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    let g:jedi#completions_enabled=0
+    let g:jedi#auto_vim_configuration=0
+    let g:jedi#smart_auto_mappings=0
+    let g:jedi#use_tabs_not_buffers=1
+    let g:tmuxcomplete#trigger=''
+    " -> Neosnippet
+    " Set information for snippets
+    let g:neosnippet#enable_snipmate_compatibility=1
+    " Use <C-K> to expand or jump snippets in insert mode
+    imap <C-K> <Plug>(neosnippet_expand_or_jump)
+    " Use <C-K> to replace TARGET within snippets in visual mode
+    xmap <C-K> <Plug>(neosnippet_start_unite_snippet_target)
+    " For snippet_complete marker
+    if has('conceal')
+        set conceallevel=2 concealcursor=i
+    endif
 else
-    if !exists('g:neocomplcache_force_omni_patterns')
-        let g:neocomplcache_force_omni_patterns={}
-    endif
-    let g:neocomplcache_force_omni_patterns.python=
-    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+    " -> UltiSnips
+    let g:UltiSnipsExpandTrigger="<C-K>"
+    let g:UltiSnipsJumpForwardTrigger="<Tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 endif
 
-" -> Neosnippet
-" Set information for snippets
-let g:neosnippet#enable_snipmate_compatibility=1
-" Use <C-K> to expand or jump snippets in insert mode
-imap <C-K> <Plug>(neosnippet_expand_or_jump)
-" Use <C-K> to replace TARGET within snippets in visual mode
-xmap <C-K> <Plug>(neosnippet_start_unite_snippet_target)
-" For snippet_complete marker
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
+" Setting info for snips
+let g:snips_author=g:tinyvim_user
+let g:snips_email=g:tinyvim_email
+let g:snips_github=g:tinyvim_github
 
 " -> vim-sneak
 let g:sneak#label = 1
