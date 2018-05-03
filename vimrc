@@ -153,7 +153,7 @@ Plug 'chrisbra/vim-diff-enhanced' " Create better diffs
 
 " -> 移动、挑转
 "--------------------------------------
-Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak' " Jump to any location specified by two characters.
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
@@ -167,9 +167,10 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 " -> 版本控制
-Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'    " Show differences with style
+Plug 'tpope/vim-git'        " Synatax highlighting for git
+Plug 'tpope/vim-fugitive'   " A git wrapper
+Plug 'gregsexton/gitv'      " Gitk for vim
 
 call plug#end()
 
@@ -361,6 +362,14 @@ command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
 " => 插件配置
 "------------------------------------------------
 
+" -> fzf.vim
+map <Leader>b :Buffers<CR>
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
 " -> ack.vim
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -483,6 +492,16 @@ if has('conceal')
     set conceallevel=2 concealcursor=i
 endif
 
+" -> vim-sneak
+let g:sneak#label = 1
+
+map <Leader>s <Plug>Sneak_s
+map <Leader>S <Plug>Sneak_S
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
 " -> incsearch.vim & incsearch-fuzzy.vim && incsearch-easymotion.vim
 
 map /  <Plug>(incsearch-forward)
@@ -517,11 +536,11 @@ noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 " -> vim-easymotion
 
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+" map  <Leader>f <Plug>(easymotion-bd-f)
+" nmap <Leader>f <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
+" nmap s <Plug>(easymotion-overwin-f2)
 
 " Move to line
 map <Leader>L <Plug>(easymotion-bd-jk)
