@@ -161,6 +161,9 @@ Plug 'sickill/vim-pasta' " Vim pasta
 Plug 'wellle/targets.vim' " Text objects
 Plug 'roman/golden-ratio' " Resize windows
 Plug 'chrisbra/vim-diff-enhanced' " Create better diffs
+Plug 'rhysd/vim-clang-format'
+Plug 'kana/vim-operator-user'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 " -> 移动、挑转
 "--------------------------------------
@@ -454,6 +457,26 @@ function! Multiple_cursors_after()
         exe 'NeoComplCacheUnlock'
     endif
 endfunction
+
+" -> vim-clang-format
+let g:clang_format#code_style = "google"
+let g:clang_format#style_options = {
+            \ "IndentWidth" : g:tinyvim_default_indent,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11",
+            \ "BreakBeforeBraces " : "Custom",
+            \ "BraceWrapping" : {
+            \       "AfterFunction" : "true"
+            \ }}
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>)
 
 " -> Undo tree
 nnoremap <Leader>u :UndotreeToggle<CR>
