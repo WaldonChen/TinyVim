@@ -61,7 +61,7 @@ install() {
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     color_print "Installing colortheme..."
     git clone https://github.com/kristijanhusak/vim-hybrid-material.git \
-        $HOME/.vim/bundle/vim-hybrid-material
+        $HOME/.vim/plugged/vim-hybrid-material
     color_print "Installing plugins using vim-plug..."
     vim +PlugUpdate +qal
     color_print "TinyVim has been installed. Enjoy it."

@@ -138,7 +138,7 @@ if g:tinyvim_autocomplete == 'NEO'
     Plug 'Shougo/neosnippet-snippets' " Snippets
 else
     let g:tinyvim_completion_engine='YouCompleteMe'
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } "Auto completion framework
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' } "Auto completion framework
     Plug 'honza/vim-snippets' " Snippets
     Plug 'sirver/ultisnips' " Snippet engine
 endif
