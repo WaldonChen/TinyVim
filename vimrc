@@ -139,6 +139,7 @@ if g:tinyvim_autocomplete == 'NEO'
 else
     let g:tinyvim_completion_engine='YouCompleteMe'
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' } "Auto completion framework
+    Plug 'rdnetto/YCM-Generator'
     Plug 'honza/vim-snippets' " Snippets
     Plug 'sirver/ultisnips' " Snippet engine
 endif
@@ -546,6 +547,9 @@ if g:tinyvim_autocomplete=='NEO'
         set conceallevel=2 concealcursor=i
     endif
 else
+    " -> YouCompleteMe
+    let g:ycm_confirm_extra_conf = 0
+
     " -> UltiSnips
     let g:UltiSnipsExpandTrigger="<C-K>"
     let g:UltiSnipsJumpForwardTrigger="<Tab>"
