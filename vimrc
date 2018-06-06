@@ -283,6 +283,8 @@ augroup filetype_makefile
     autocmd!
     autocmd FileType Makefile set noexpandtab
 augroup END
+" @see help cinoptions-values
+set cino=l1,t0,(0,W4
 
 "-------------------------------------------------
 " => 搜索
@@ -478,6 +480,8 @@ autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>)
+" Invoke clang-format with G=gg or other = indent options
+" autocmd FileType c,cpp setlocal equalprg=clang-format
 
 " -> Undo tree
 nnoremap <Leader>u :UndotreeToggle<CR>
