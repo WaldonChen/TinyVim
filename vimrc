@@ -139,7 +139,7 @@ if g:tinyvim_autocomplete == 'NEO'
 else
     let g:tinyvim_completion_engine='YouCompleteMe'
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' } "Auto completion framework
-    Plug 'rdnetto/YCM-Generator'
+    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
     Plug 'honza/vim-snippets' " Snippets
     Plug 'sirver/ultisnips' " Snippet engine
 endif
