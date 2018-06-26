@@ -189,6 +189,7 @@ Plug 'gregsexton/gitv' " Gitk for vim
 
 " -> 其它
 Plug 'yianwillis/vimcdoc' " Chinese vim doc
+Plug 'pboettch/vim-cmake-syntax'
 
 call plug#end()
 
@@ -284,7 +285,7 @@ augroup filetype_makefile
     autocmd FileType Makefile set noexpandtab
 augroup END
 " @see help cinoptions-values
-set cino=l1,t0,(0,W4
+set cino=l1,t0,(0,W4,E-s
 
 "-------------------------------------------------
 " => 搜索
@@ -558,6 +559,9 @@ else
     let g:UltiSnipsExpandTrigger="<C-K>"
     let g:UltiSnipsJumpForwardTrigger="<Tab>"
     let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+    let g:UltiSnipsSnippetsDir=$HOME.'/.vim/snips'
+    let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/snips']
+    let g:UltiSnipsEditSplit="vertical"
 endif
 
 " Setting info for snips
