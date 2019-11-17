@@ -26,7 +26,7 @@
 let g:tinyvim_user = "Waldon Chen"
 let g:tinyvim_email = "waldonchen at gmail.com"
 let g:tinyvim_github = "https://waldonchen.github.io"
-let g:tinyvim_autocomplete = "YCM"  " or NEO
+let g:tinyvim_autocomplete = "NEO"  " or YCM
 let g:tinyvim_fancy_font = 1
 let g:tinyvim_expand_tab = 1
 let g:tinyvim_default_indent = 4
