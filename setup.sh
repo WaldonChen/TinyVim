@@ -30,8 +30,7 @@ compress()
     cd $HOME
     tar --exclude="TinyVim.*.tar.gz" \
         -zcf ${CONFIG_FILE}          \
-        .vim/autoload .vim/plugged   \
-        .TinyVim/ .fzf
+        .vim/ .TinyVim/
 }
 
 warn() {
@@ -55,13 +54,16 @@ install() {
     cd $HOME
     rm -rf $HOME/.TinyVim
     git clone https://github.com/waldonchen/TinyVim.git $HOME/.TinyVim
-    ln -s $HOME/.TinyVim/vimrc $HOME/.vimrc
+    if [ ! -d $HOME/.vim ]; then mkdir $HOME/.vim; fi
+    ln -s $HOME/.TinyVim/vimrc $HOME/.vim/vimrc
+    ln -s $HOME/.TinyVim/config $HOME/.vim/config
+    ln -s $HOME/.TinyVim/script $HOME/.vim/script
     color_print "Installing vim-plug"
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     color_print "Installing colortheme..."
-    git clone https://github.com/kristijanhusak/vim-hybrid-material.git \
-        $HOME/.vim/plugged/vim-hybrid-material
+    git clone https://github.com/gruvbox-community/gruvbox.git \
+        $HOME/.vim/plugged/gruvbox
     color_print "Installing plugins using vim-plug..."
     vim +PlugUpdate +qal
     color_print "TinyVim has been installed. Enjoy it."
