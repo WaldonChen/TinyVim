@@ -103,7 +103,7 @@ call plug#begin('~/.vim/plugged')
 "--------------------------------------
 Plug 'junegunn/fzf', {'dir': '~/.vim/fzf', 'do': './install --all'}        " fuzzy search in a dir
 " Plug 'junegunn/fzf.vim'                                                    " fuzzy search in a dir
-Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release' }
+Plug 'yuki-ycino/fzf-preview.vim'
 " Plug 'preservim/nerdtree'
 
 " -> 自动补全
@@ -131,7 +131,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 " Plug 'terryma/vim-multiple-cursors'
 Plug  'chrisbra/vim-diff-enhanced'
-" Plug  'rhysd/vim-clang-format'
+Plug  'rhysd/vim-clang-format'
 " Plug 'kana/vim-operator-user'
 " Plug 'Shougo/vimproc.vim', {'build' : 'make'}
 
@@ -255,8 +255,8 @@ set foldlevelstart=0 " Start with all folds closed
 set foldcolumn=1 " Set fold column
 
 " Space to toggle and create folds.
-nnoremap <silent> <Space> @=(foldlevel('.') ? 'za' : '\<Space>')<CR>
-vnoremap <Space> zf
+" nnoremap <silent> <Space> @=(foldlevel('.') ? 'za' : '\<Space>')<CR>
+" vnoremap <Space> zf
 
 " Set foldtext
 function! MyFoldText()

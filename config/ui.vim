@@ -264,3 +264,19 @@ if has_key(g:plugs, 'lightline.vim')
         endif
     endfunction
 endif
+
+"-------------------------------------------------
+" => vim-illuminate
+"-------------------------------------------------
+if has_key(g:plugs, 'vim-illuminate')
+    " Amount of time to wait before highlighting
+    let g:Illuminate_delay = 250
+
+    " match the following three vimscript highlight groups
+    " Don't match strings for python filetypes
+    let g:Illuminate_ftHighlightGroups = {
+                \ 'vim': ['vimVar', 'vimString', 'vimLineComment'],
+                \ 'python:blacklist': ['String'],
+                \ }
+endif
+

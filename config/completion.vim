@@ -268,3 +268,24 @@ if has_key(g:plugs, 'coc-fzf')
     " Resume latest coc list.
     nnoremap <silent><nowait> <space>p  :<C-u>CocFzfListResume<CR>
 endif
+
+"-------------------------------------------------
+" => ale
+"-------------------------------------------------
+if has_key(g:plugs, 'ale')
+    let g:ale_c_ccls_init_options = {
+    \   'cache': {
+    \       'directory': '/tmp/ccls'
+    \   }
+    \ }
+    let g:ale_cpp_ccls_init_options = {
+    \   'cache': {
+    \       'directory': '/tmp/ccls'
+    \   },
+    \   'clang': {
+    \       'extraArgs': [
+    \           '-isystem/usr/local/include'
+    \       ]
+    \   }
+    \ }
+endif
