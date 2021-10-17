@@ -89,7 +89,7 @@ set viewoptions+=slash,unix " Better Unix/Windows compatibility
 set viewoptions-=options " in case of mapping change
 
 if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    silent !curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
@@ -97,11 +97,11 @@ endif
 "-------------------------------------------------
 " => 插件
 "-------------------------------------------------
-call plug#begin('~/.vim/plugged')
+call plug#begin('$HOME/.vim/plugged')
 
 " -> 文件查找
 "--------------------------------------
-Plug 'junegunn/fzf', {'dir': '~/.vim/fzf', 'do': './install --all'}        " fuzzy search in a dir
+Plug 'junegunn/fzf', {'dir': '$HOME/.vim/fzf', 'do': './install --all'}      " fuzzy search in a dir
 " Plug 'junegunn/fzf.vim'                                                    " fuzzy search in a dir
 Plug 'yuki-ycino/fzf-preview.vim'
 " Plug 'preservim/nerdtree'

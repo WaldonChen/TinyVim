@@ -203,7 +203,7 @@ if has_key(g:plugs, 'lightline.vim')
         autocmd BufWinEnter,BufWritePost * call s:UpdateRevStatus()
     endif
     function! s:UpdateRevStatus()
-        let l:vc_cmd = expand('~/.vim/script/version_control_status ' . expand('%:p')) . ' ' . bufnr("%")
+        let l:vc_cmd = expand('$HOME/.vim/script/version_control_status ' . expand('%:p')) . ' ' . bufnr("%")
         if has('job')
             let l:job = job_start(l:vc_cmd, {'out_cb': function('s:UpdateRevStatusOutCb'), 'exit_cb': function('s:UpdateRevStatusExitCb')})
         elseif has('nvim')

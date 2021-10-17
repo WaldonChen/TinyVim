@@ -2,7 +2,7 @@
 " => coc.nvim
 "-------------------------------------------------
 if has_key(g:plugs, 'coc.nvim')
-    let g:coc_data_home = '~/.vim/coc'
+    let g:coc_data_home = '$HOME/.vim/coc'
 
     " TextEdit might fail if hidden is not set
     " set hidden
